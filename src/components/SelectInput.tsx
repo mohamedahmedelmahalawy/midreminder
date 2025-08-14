@@ -1,20 +1,36 @@
-import { useId } from "react"
+import { useId } from "react";
+import { Label } from "@/components/ui/label";
+import { SelectNative } from "@/components/ui/select-native";
 
-import { Label } from "@/components/ui/label"
-import { SelectNative } from "@/components/ui/select-native"
+interface Option {
+	value: string;
+	label: string;
+}
 
-export default function SelectInput() {
-  const id = useId()
-  return (
-    <div className="*:not-first:mt-2">
-      <Label htmlFor={id}>Doctor Profession</Label>
-      <SelectNative id={id}>
-        <option value="1">General Practitioner</option>
-        <option value="2">Physician</option>
-        <option value="3">Surgeon</option>
-        <option value="4">Dentist</option>
-        <option value="5">Pediatrician</option>
-      </SelectNative>
-    </div>
-  )
+interface SelectInputProps
+	extends React.SelectHTMLAttributes<HTMLSelectElement> {
+	label?: string;
+	options: Option[];
+}
+
+export default function SelectInput({
+	label = "Select Option",
+	options,
+	...rest 
+}: SelectInputProps) {
+	const id = useId();
+
+	return (
+		<div className='*:not-first:mt-2'>
+			<Label htmlFor={id}>{label}</Label>
+			<SelectNative id={id} {...rest}>
+				<option value=''>Select {label}</option>
+				{options.map((opt) => (
+					<option key={opt.value} value={opt.value}>
+						{opt.label}
+					</option>
+				))}
+			</SelectNative>
+		</div>
+	);
 }
