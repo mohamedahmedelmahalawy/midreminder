@@ -1,3 +1,5 @@
+import Footer from "./components/Footer";
+import Navbar from "./components/navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -13,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50">{children}</body>
+      
+      <body className="bg-gray-50">  
+        <Navbar/>
+        {children}
+        <Footer/>
+        </body>   
     </html>
+    
   );
 }
