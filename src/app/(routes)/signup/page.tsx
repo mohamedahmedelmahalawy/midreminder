@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Link from "next/link";
 import Image from "next/image";
-import Dropdown from "@/app/components/Dropdown";
 import EmailInput from "@/components/EmailInputOrigin";
 import PassWordInput from "@/components/PasswordInputOrigin";
 import PasswordCheckOrigin from "@/components/PasswordCheckOrigin";
@@ -28,17 +27,6 @@ type RegisterFormData = {
   city: string;
 };
 
-const cities: Option[] = [
-  { id: 1, name: "Cairo" },
-  { id: 2, name: "Alexandria" },
-  { id: 3, name: "Giza" },
-];
-
-const professions: Option[] = [
-  { id: 1, name: "Software Developer" },
-  { id: 2, name: "Designer" },
-  { id: 3, name: "Engineer" },
-];
 
 export default function RegisterPage() {
   const {
@@ -196,7 +184,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-4">
               <SelectInput
                 label="Profession"
-                options={professions}
+          
                 {...register("profession")}
               />
               <div>
