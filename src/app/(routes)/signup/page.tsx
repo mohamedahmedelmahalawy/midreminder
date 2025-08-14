@@ -28,6 +28,7 @@ type RegisterFormData = {
 };
 
 
+
 export default function RegisterPage() {
   const {
     register,
@@ -184,7 +185,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-4">
               <SelectInput
                 label="Profession"
-          
+
                 {...register("profession")}
               />
               <div>
