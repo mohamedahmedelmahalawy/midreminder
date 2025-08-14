@@ -7,8 +7,7 @@ export default function EmailInputOrigin() {
   const id = useId()
   return (
     <div className="*:not-first:mt-2">
-      <Label htmlFor={id}>
-        Required input <span className="text-destructive">*</span>
+      <Label htmlFor={id}><span className="text-destructive"></span>
       </Label>
       <Input id={id} placeholder="Email" type="email" required />
     </div>

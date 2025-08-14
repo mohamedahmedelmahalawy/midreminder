@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Link from "next/link";
 import Image from "next/image";
-import Dropdown from "@/app/components/Dropdown";
 import EmailInput from "@/components/EmailInputOrigin";
 import PassWordInput from "@/components/PasswordInputOrigin";
 import PasswordCheckOrigin from "@/components/PasswordCheckOrigin";
+import PhoneInputOrigin from "@/components/PhoneInputOrigin";
+import SelectInput from "@/components/SelectInput";
+import CountryInput from "@/components/CountryInput";
 
 type Option = { id: number; name: string };
 
@@ -25,23 +27,7 @@ type RegisterFormData = {
   city: string;
 };
 
-const countries: Option[] = [
-  { id: 1, name: "Egypt" },
-  { id: 2, name: "USA" },
-  { id: 3, name: "UK" },
-];
 
-const cities: Option[] = [
-  { id: 1, name: "Cairo" },
-  { id: 2, name: "Alexandria" },
-  { id: 3, name: "Giza" },
-];
-
-const professions: Option[] = [
-  { id: 1, name: "Software Developer" },
-  { id: 2, name: "Designer" },
-  { id: 3, name: "Engineer" },
-];
 
 export default function RegisterPage() {
   const {
@@ -51,16 +37,12 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const [selectedCountry, setSelectedCountry] = useState<Option>(countries[0]);
   const [selectedCity, setSelectedCity] = useState<Option>(cities[0]);
-  const [selectedProfession, setSelectedProfession] = useState<Option>(professions[0]);
 
   const onSubmit = (data: RegisterFormData) => {
     console.log({
       ...data,
-      country: selectedCountry.name,
       city: selectedCity.name,
-      profession: selectedProfession.name,
     });
   };
 
@@ -68,7 +50,7 @@ export default function RegisterPage() {
   const confirmPasswordValue = watch("confirmPassword");
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex overflow-hidden">
       {/* Left section */}
       <div className="hidden md:flex md:w-1/2 bg-purple-800 text-white flex-col justify-center items-center p-8">
         <div className="max-w-md text-center">
@@ -77,7 +59,8 @@ export default function RegisterPage() {
             <span className="text-lg font-medium">Untitled UI</span>
           </div>
           <p className="text-xl font-medium mb-6">
-            We’ve been using Untitled to kick start every new project and can’t imagine working without it.
+            We’ve been using Untitled to kick start every new project and can’t
+            imagine working without it.
           </p>
           <div className="flex flex-col items-center">
             <Image
@@ -91,7 +74,9 @@ export default function RegisterPage() {
             <p className="text-sm text-purple-200">Head of Design, Layers</p>
             <div className="flex mt-2">
               {Array.from({ length: 5 }).map((_, i) => (
-                <span key={i} className="text-yellow-400 text-lg">★</span>
+                <span key={i} className="text-yellow-400 text-lg">
+                  ★
+                </span>
               ))}
             </div>
           </div>
@@ -107,7 +92,10 @@ export default function RegisterPage() {
             Welcome back! Please enter your details.
           </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             {/* Full name */}
             <div>
               <label className="block text-sm font-medium">Full Name</label>
@@ -118,7 +106,11 @@ export default function RegisterPage() {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 
                            focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
+              {errors.fullName && (
+                <p className="text-red-500 text-sm">
+                  {errors.fullName.message}
+                </p>
+              )}
             </div>
 
             {/* Age */}
@@ -131,7 +123,9 @@ export default function RegisterPage() {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 
                            focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.age && <p className="text-red-500 text-sm">{errors.age.message}</p>}
+              {errors.age && (
+                <p className="text-red-500 text-sm">{errors.age.message}</p>
+              )}
             </div>
 
             {/* Email */}
@@ -143,7 +137,9 @@ export default function RegisterPage() {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 
                            focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
 
             {/* Password & Confirm Password */}
@@ -155,7 +151,9 @@ export default function RegisterPage() {
                   label="Password"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password.message}</p>
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -175,50 +173,45 @@ export default function RegisterPage() {
 
             {/* Telephone */}
             <div>
-              <label className="block text-sm font-medium">Telephone</label>
-              <input
+              <PhoneInputOrigin
                 {...register("telephone")}
-                type="tel"
                 placeholder="Enter your Telephone number"
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 
                            focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
 
-            {/* Profession */}
-            <Dropdown
-              label="Profession"
-              options={professions}
-              value={selectedProfession}
-              onChange={setSelectedProfession}
-            />
+            {/* Profession & Speciality */}
+            <div className="grid grid-cols-2 gap-4">
+              <SelectInput
+                label="Profession"
 
-            {/* Speciality */}
-            <div>
-              <label className="block text-sm font-medium">Speciality</label>
-              <input
-                {...register("speciality")}
-                type="text"
-                placeholder="Enter your Speciality"
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 
-                           focus:outline-none focus:ring-2 focus:ring-purple-500"
+                {...register("profession")}
               />
+              <div>
+                <label className="block text-sm font-medium">Speciality</label>
+                <input
+                  {...register("speciality")}
+                  type="text"
+                  placeholder="Enter your Speciality"
+                  className="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 
+                             focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
             </div>
 
             {/* Country & City */}
             <div className="grid grid-cols-2 gap-4 ">
-              <Dropdown
-                label="Country"
-                options={countries}
-                value={selectedCountry}
-                onChange={setSelectedCountry}
+              <CountryInput
+               
+                {...register("country", { required: "Country is required" })}
               />
-              <Dropdown
+              {/* <Dropdown
                 label="City"
                 options={cities}
                 value={selectedCity}
                 onChange={setSelectedCity}
-              />
+              /> */}
             </div>
 
             {/* Submit */}

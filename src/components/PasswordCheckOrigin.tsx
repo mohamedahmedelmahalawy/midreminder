@@ -14,7 +14,7 @@ export default function PasswordCheckOrigin() {
 
   return (
     <div className="*:not-first:mt-2">
-      <Label htmlFor={id}>Show/hide password input</Label>
+      <Label htmlFor={id}>Confirm Password</Label>
       <div className="relative">
         <Input
           id={id}
